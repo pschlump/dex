@@ -24,6 +24,7 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/pschlump/dbgo"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/dexidp/dex/connector"
@@ -402,6 +403,8 @@ func newServer(ctx context.Context, c Config, rotationStrategy rotationStrategy)
 	handleWithCORS("/keys", s.handlePublicKeys)
 	handleWithCORS("/userinfo", s.handleUserInfo)
 	handleWithCORS("/token/introspect", s.handleIntrospect)
+	// dbgo.Printf("%(green)at:%(LF)/status created\n")
+	handleFunc("/status", s.statusHandler)
 	handleFunc("/auth", s.handleAuthorization)
 	handleFunc("/auth/{connector}", s.handleConnectorLogin)
 	handleFunc("/auth/{connector}/login", s.handlePasswordLogin)
@@ -437,6 +440,26 @@ func newServer(ctx context.Context, c Config, rotationStrategy rotationStrategy)
 	handlePrefix("/theme", theme)
 	handleFunc("/robots.txt", robots)
 
+	dbgo.Printf(`{"paths:[` + "\n")
+	com := "  "
+	r.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
+		var s string
+		tpl, err1 := route.GetPathTemplate()
+		met, err2 := route.GetMethods()
+		if err1 == nil {
+			s = tpl
+		} else {
+			s = fmt.Sprintf("Path error:%s", err1)
+		}
+		if err2 == nil {
+			s += dbgo.SVar(met)
+		}
+		dbgo.Printf("    %s%(cyan)%q\n", com, s)
+		com = ", "
+		return nil
+	})
+	dbgo.Printf(`]}` + "\n")
+
 	s.mux = r
 
 	s.startKeyRotation(ctx, rotationStrategy, now)
@@ -446,6 +469,8 @@ func newServer(ctx context.Context, c Config, rotationStrategy rotationStrategy)
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	// dbgo.Printf("%(yellow)at:%(LF) %s %s\n", r.Method, r.URL)
+	dbgo.Printf(`{"method":%q, "url":%q}`+"\n", r.Method, r.URL)
 	s.mux.ServeHTTP(w, r)
 }
 
@@ -681,4 +706,8 @@ func (s *Server) getConnector(id string) (Connector, error) {
 	}
 
 	return conn, nil
+}
+
+func (s *Server) statusHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "I Am Alive\n")
 }

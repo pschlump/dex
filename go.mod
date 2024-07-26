@@ -1,6 +1,6 @@
 module github.com/dexidp/dex
 
-go 1.21
+go 1.22.0
 
 require (
 	cloud.google.com/go/compute/metadata v0.5.0
@@ -28,6 +28,7 @@ require (
 	github.com/oklog/run v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.19.1
+	github.com/pschlump/dbgo v1.0.9
 	github.com/russellhaering/goxmldsig v1.4.0
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
@@ -80,6 +81,11 @@ require (
 	github.com/prometheus/client_model v0.5.0 // indirect
 	github.com/prometheus/common v0.48.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
+	github.com/pschlump/ansi v1.0.9 // indirect
+	github.com/pschlump/filelib v1.0.12 // indirect
+	github.com/pschlump/go-colorable v0.0.24 // indirect
+	github.com/pschlump/go-isatty v0.0.24 // indirect
+	github.com/pschlump/json v1.12.1 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
