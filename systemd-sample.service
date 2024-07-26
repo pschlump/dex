@@ -6,7 +6,7 @@ After=network.target
 [Service]
 Type=simple
 User=appserver
-Group=appserver
+Group=devops
 LimitNOFILE=1024
 
 Restart=on-failure
@@ -14,7 +14,7 @@ RestartSec=10
 startLimitIntervalSec=60
 
 WorkingDirectory=/home/appserver/svr/dex
-ExecStart=/home/appserver/svr/app.write-it-right.ai/run-server.sh
+ExecStart=/home/appserver/svr/dex/run-server.sh
 
 
 # make sure log directory exists and owned by syslog

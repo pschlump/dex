@@ -5,3 +5,10 @@
 /docker-compose.override.yaml
 /var/
 /vendor/
+pjs-setup0.pg.sql
+prod-setup-pg.sql
+setup_admin_pw.sh
+note.1
+todo.1
+pjs-run1.sh
+examples/config-prod.yaml
