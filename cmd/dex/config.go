@@ -273,10 +273,10 @@ var (
 	_ StorageConfig = (*etcd.Etcd)(nil)
 	_ StorageConfig = (*kubernetes.Config)(nil)
 	_ StorageConfig = (*memory.Config)(nil)
-	_ StorageConfig = (*sql.SQLite3)(nil)
+	//	_ StorageConfig = (*sql.SQLite3)(nil)
 	_ StorageConfig = (*sql.Postgres)(nil)
 	_ StorageConfig = (*sql.MySQL)(nil)
-	_ StorageConfig = (*ent.SQLite3)(nil)
+	//	_ StorageConfig = (*ent.SQLite3)(nil)
 	_ StorageConfig = (*ent.Postgres)(nil)
 	_ StorageConfig = (*ent.MySQL)(nil)
 )
@@ -294,9 +294,9 @@ var storages = map[string]func() StorageConfig{
 	"etcd":       func() StorageConfig { return new(etcd.Etcd) },
 	"kubernetes": func() StorageConfig { return new(kubernetes.Config) },
 	"memory":     func() StorageConfig { return new(memory.Config) },
-	"sqlite3":    getORMBasedSQLStorage(&sql.SQLite3{}, &ent.SQLite3{}),
-	"postgres":   getORMBasedSQLStorage(&sql.Postgres{}, &ent.Postgres{}),
-	"mysql":      getORMBasedSQLStorage(&sql.MySQL{}, &ent.MySQL{}),
+	//	"sqlite3":    getORMBasedSQLStorage(&sql.SQLite3{}, &ent.SQLite3{}),
+	"postgres": getORMBasedSQLStorage(&sql.Postgres{}, &ent.Postgres{}),
+	"mysql":    getORMBasedSQLStorage(&sql.MySQL{}, &ent.MySQL{}),
 }
 
 // UnmarshalJSON allows Storage to implement the unmarshaler interface to
